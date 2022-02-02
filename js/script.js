@@ -8,7 +8,7 @@ let service1;
 let service2;
 let allServicePrices;
 let servicePercentPrice;
-//asking();
+
 const asking = function () {
   title = prompt("Как называется ваш проект?", "Калькулятор верстки");
   screens = prompt(
@@ -41,7 +41,9 @@ const getAllServicePrices = function () {
 };
 
 const isNumber = function (num) {
-  return !isNaN(parseFloat(num)) && isFinite(num);
+  return (
+    !isNaN(parseFloat(num)) && isFinite(num) && num.length == num.trim().length
+  );
 };
 function getFullPrice(screenPrice, allServicePrices) {
   return screenPrice + allServicePrices;
