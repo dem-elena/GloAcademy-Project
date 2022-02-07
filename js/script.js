@@ -25,7 +25,7 @@ const appData = {
       do {
         price = prompt("Сколько будет стоить данная работа?");
       } while (!appData.isNumber(price));
-      appData.screens.push({ id: i, name: name, price: price });
+      appData.screens.push({ id: i, name: name, price: +price });
     }
     appData.adaptive = confirm("Нужен ли адаптив на сайте ?");
     for (let i = 0; i < 2; i++) {
@@ -37,23 +37,18 @@ const appData = {
       do {
         price = prompt("Сколько это будет стоить?");
       } while (!appData.isNumber(price));
-      appData.services[key] = +price;
+      appData.services[i + "." + key] = +price;
     }
   },
   addPrice: function () {
-    for (let screen of appData.screens) {
-      appData.screenPrice += +screen.price;
-    }
+    appData.screenPrice = appData.screens.reduce(function (sum, item) {
+      return sum + item.price;
+    }, 0);
     for (let key in appData.services) {
       appData.allServicePrices += +appData.services[key];
     }
   },
 
-  // getAllServicePrices: function () {
-  //   for (let key in appData.services) {
-  //     appData.allServicePrices += +appData.services[key];
-  //   }
-  // },
   isNumber: function (num) {
     return (
       !isNaN(parseFloat(num)) &&
@@ -93,7 +88,6 @@ const appData = {
   start: function () {
     appData.asking();
     appData.addPrice();
-    //appData.getAllServicePrices();
     appData.getFullPrice();
     appData.getServicePercentPrices();
     appData.getTitle();
@@ -104,6 +98,7 @@ const appData = {
     console.log(appData.servicePercentPrice);
     console.log(appData.fullPrice);
     console.log(appData.screens);
+
     // for (let key in appData) {
     //   console.log(key);
     // }
